@@ -1,7 +1,7 @@
 # Read the doc: https://huggingface.co/docs/hub/spaces-sdks-docker
 # you will also find guides on how best to write your Dockerfile
 
-FROM python:3.12-slim
+FROM python:3.12.0
 
 # Declare build-time variables
 ARG MODEL_REPO_NAME
