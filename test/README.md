@@ -1,14 +1,21 @@
 # Test Suite
 
-This directory contains comprehensive unit tests for the LLM Code Deployment API.
+This directory contains comprehensive unit tests for the LLM Code Deployment API using **pytest** and **Hypothesis**.
 
 ## Test Files
 
+### Unit Tests (pytest)
 - **test_models.py** - Tests for Pydantic models (TaskRequest, EvaluationPayload, APIResponse, Attachment)
 - **test_utils.py** - Tests for utility functions (decode_and_save_attachments, sanitize_repo_name, get_mit_license)
 - **test_config.py** - Tests for configuration validation
 - **test_evaluator.py** - Tests for evaluation notifier with retry logic
 - **test_main.py** - Tests for FastAPI endpoints and background task processing
+
+### Property-Based Tests (Hypothesis)
+- **test_models_hypothesis.py** - Property-based tests for models with random data generation
+- **test_utils_hypothesis.py** - Property-based tests for utilities with edge case discovery
+
+### Integration Tests
 - **test_client.py** - Integration test client for manual testing
 
 ## Running Tests
@@ -19,7 +26,23 @@ This directory contains comprehensive unit tests for the LLM Code Deployment API
 pip install -r requirements.txt
 ```
 
-This will install pytest, pytest-asyncio, and pytest-mock along with other dependencies.
+This will install pytest, pytest-asyncio, pytest-mock, and hypothesis along with other dependencies.
+
+### Run Property-Based Tests (Hypothesis)
+
+```bash
+# Run all Hypothesis tests
+pytest test/test_models_hypothesis.py test/test_utils_hypothesis.py
+
+# Run with statistics
+pytest test/test_models_hypothesis.py --hypothesis-show-statistics
+
+# Run more examples (default is 100)
+pytest test/test_models_hypothesis.py --hypothesis-examples=1000
+
+# Run with specific seed for reproducibility
+pytest test/test_models_hypothesis.py --hypothesis-seed=12345
+```
 
 ### Run All Tests
 
