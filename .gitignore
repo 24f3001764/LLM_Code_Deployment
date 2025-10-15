@@ -56,6 +56,7 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
+API_token_model_compatiblity.py
 
 # OS
 Thumbs.db

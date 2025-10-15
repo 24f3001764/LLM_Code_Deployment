@@ -11,6 +11,9 @@ __pycache__/
 dist/
 build/
 
+# Test
+API_token_model_compatiblity.py
+
 # Environment
 .env
 .env.local

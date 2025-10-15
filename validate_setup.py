@@ -86,32 +86,31 @@ def check_directories():
 
 def check_api_keys():
     """Validate API keys format"""
-    issues = []
+    warnings = []
     
-    # Check OpenAI API key format
+    # Check OpenAI API key format (warning only for non-standard keys like aipipe.org)
     openai_key = os.getenv('OPENAI_API_KEY', '')
     if openai_key:
         if not openai_key.startswith('sk-'):
-            issues.append("OpenAI API key should start with 'sk-'")
+            warnings.append("OpenAI API key should start with 'sk-' (unless using alternative provider like aipipe.org)")
     
     # Check GitHub token format
     github_token = os.getenv('GITHUB_TOKEN', '')
     if github_token:
         if not (github_token.startswith('ghp_') or github_token.startswith('gho_') or github_token.startswith('ghs_')):
-            issues.append("GitHub token should start with 'ghp_', 'gho_', or 'ghs_'")
+            warnings.append("GitHub token should start with 'ghp_', 'gho_', or 'ghs_'")
     
-    if issues:
-        for issue in issues:
-            print(f"  ⚠️  {issue}")
-        return False
-    else:
-        print("  ✅ API key formats look correct")
-        return True
+    if warnings:
+        for warning in warnings:
+            print(f"  ⚠️  {warning}")
+    
+    # Always return True since these are just warnings
+    return True
 
 def test_github_connection():
     """Test GitHub API connection"""
     try:
-        from github import Github
+        from github import Github, Auth
         token = os.getenv('GITHUB_TOKEN')
         username = os.getenv('GITHUB_USERNAME')
         
@@ -119,12 +118,19 @@ def test_github_connection():
             print("  ⚠️  Cannot test - credentials not set")
             return False
         
-        g = Github(token)
+        # Use new Auth method to avoid deprecation warning
+        auth = Auth.Token(token)
+        g = Github(auth=auth)
         user = g.get_user()
         
         if user.login.lower() == username.lower():
             print(f"  ✅ Connected to GitHub as {user.login}")
-            print(f"     Remaining API calls: {g.get_rate_limit().core.remaining}")
+            try:
+                rate_limit = g.get_rate_limit()
+                print(f"     Remaining API calls: {rate_limit.core.remaining}")
+            except:
+                # Skip rate limit check if it fails
+                pass
             return True
         else:
             print(f"  ❌ GitHub username mismatch: {user.login} != {username}")
@@ -139,15 +145,20 @@ def test_openai_connection():
     try:
         from openai import OpenAI
         api_key = os.getenv('OPENAI_API_KEY')
+        base_url = os.getenv('OPENAI_BASE_URL', 'https://api.openai.com/v1')  # ADD THIS LINE
         
         if not api_key:
             print("  ⚠️  Cannot test - API key not set")
             return False
         
-        client = OpenAI(api_key=api_key)
+        # Use custom base_url for alternative providers like aipipe.org
+        client = OpenAI(api_key=api_key, base_url=base_url)  # UPDATE THIS LINE
+        
         # Try to list models to verify the key works
         models = client.models.list()
         print(f"  ✅ Connected to OpenAI API")
+        if base_url != 'https://api.openai.com/v1':  # ADD THESE LINES
+            print(f"     Using custom endpoint: {base_url}")
         return True
             
     except Exception as e:

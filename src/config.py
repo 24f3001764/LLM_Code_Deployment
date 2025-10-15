@@ -12,6 +12,8 @@ class Config:
     
     # API keys
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+    # Replace OPENAI_BASE_URL, i.e. https://api.openai.com/v1 with https://aipipe.org/openrouter/v1... or https://aipipe.org/openai/v1...
+    OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://aipipe.org/openai/v1")
     GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
     GITHUB_USERNAME = os.getenv("GITHUB_USERNAME", "")
     

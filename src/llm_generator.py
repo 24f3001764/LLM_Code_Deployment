@@ -10,7 +10,10 @@ class LLMAppGenerator:
     """Generate web applications using LLM"""
     
     def __init__(self):
-        self.client = OpenAI(api_key=config.OPENAI_API_KEY)
+        self.client = OpenAI(
+            api_key=config.OPENAI_API_KEY,
+            base_url=config.OPENAI_BASE_URL
+        )
     
     async def generate_app(
         self, 

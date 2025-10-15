@@ -21,7 +21,7 @@ async def test_round_1():
     print("=" * 60)
     
     request_data = {
-        "email": "test@example.com",
+        "email": "24f3001764@ds.study.iitm.ac.in",  # Replace with your actual email
         "secret": config.STUDENT_SECRET,
         "task": "test-task-001",
         "round": 1,
@@ -74,7 +74,7 @@ async def test_round_2():
     print("=" * 60)
     
     request_data = {
-        "email": "test@example.com",
+        "email": "24f3001764@ds.study.iitm.ac.in",  # Replace with your actual email
         "secret": config.STUDENT_SECRET,
         "task": "test-task-001",
         "round": 2,
