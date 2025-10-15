@@ -1,0 +1,19 @@
+{
+  "email": "student@example.com",
+  "secret": "your-secret-here",
+  "task": "sample-task-001",
+  "round": 1,
+  "nonce": "sample-nonce-abc123",
+  "brief": "Create a simple calculator web application. The calculator should support basic operations: addition, subtraction, multiplication, and division. It should have a clean, modern interface with buttons for digits 0-9, operation buttons (+, -, *, /), an equals button, and a clear button. Display the current calculation and result in a display area at the top.",
+  "checks": [
+    "Calculator has buttons for digits 0-9",
+    "Calculator supports +, -, *, / operations",
+    "Calculator has equals and clear buttons",
+    "Display shows current calculation",
+    "Modern, responsive design",
+    "README.md explains features",
+    "MIT License included"
+  ],
+  "evaluation_url": "https://httpbin.org/post",
+  "attachments": []
+}
